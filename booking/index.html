@@ -38,7 +38,7 @@
       min-height: 100vh;
     }
 
-    /* ââ Header ââââââââââââââââââââââââââââââââââââââââââââââââ */
+    /* -- Header -------------------------------------------- */
     header {
       background: linear-gradient(140deg, #0c4a6e 0%, #0284c7 55%, #38bdf8 100%);
       color: white;
@@ -56,7 +56,6 @@
       background: var(--bg);
       clip-path: ellipse(55% 100% at 50% 100%);
     }
-
     header h1 {
       font-size: 2.4rem;
       font-weight: 800;
@@ -71,14 +70,14 @@
       line-height: 1.6;
     }
 
-    /* ââ Main layout âââââââââââââââââââââââââââââââââââââââââââ */
+    /* -- Main layout --------------------------------------- */
     main {
       max-width: 1080px;
       margin: 0 auto;
       padding: 36px 20px 80px;
     }
 
-    /* ââ Legend ââââââââââââââââââââââââââââââââââââââââââââââââ */
+    /* -- Legend -------------------------------------------- */
     .legend {
       display: flex;
       flex-wrap: wrap;
@@ -107,9 +106,22 @@
     }
     .ls-available { background: var(--available-bg); border: 1.5px solid var(--available); }
     .ls-busy      { background: var(--busy-bg);      border: 1.5px solid var(--busy); }
-    .ls-past      { background: #eee; border: 1.5px solid #ddd; }
+    .ls-selected  { background: var(--ocean);        border: 1.5px solid var(--ocean-dark); }
 
-    /* ââ Navigation row ââââââââââââââââââââââââââââââââââââââââ */
+    /* -- Range-selection hint bar -------------------------- */
+    .range-hint {
+      background: #eff6ff;
+      border: 1.5px solid #bfdbfe;
+      border-radius: var(--radius);
+      padding: 12px 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--ocean-dark);
+      margin-bottom: 20px;
+    }
+
+    /* -- Navigation row ------------------------------------ */
     .nav-row {
       display: flex;
       align-items: center;
@@ -147,7 +159,7 @@
       flex: 1;
     }
 
-    /* ââ Calendar grid âââââââââââââââââââââââââââââââââââââââââ */
+    /* -- Calendar grid ------------------------------------- */
     .calendars {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -228,7 +240,32 @@
       box-shadow: inset 0 0 0 2px var(--ocean);
     }
 
-    /* ââ Status messages (loading / error / setup) âââââââââââââ */
+    /* Range selection states */
+    .day-cell.range-start,
+    .day-cell.range-end {
+      background: var(--ocean) !important;
+      color: white !important;
+      border-radius: 7px;
+      transform: scale(1.1);
+      z-index: 2;
+      box-shadow: 0 3px 10px rgba(2,132,199,0.45);
+      font-weight: 800;
+    }
+    .day-cell.range-start:hover,
+    .day-cell.range-end:hover {
+      background: var(--ocean-dark) !important;
+    }
+    .day-cell.in-range {
+      background: rgba(2,132,199,0.12) !important;
+      color: var(--ocean-dark) !important;
+      border-radius: 3px;
+      font-weight: 700;
+    }
+    .day-cell.in-range:hover {
+      background: rgba(2,132,199,0.22) !important;
+    }
+
+    /* -- Status messages ----------------------------------- */
     .status-card {
       background: var(--surface);
       border: 1.5px solid var(--border);
@@ -237,7 +274,6 @@
       text-align: center;
       box-shadow: var(--shadow);
     }
-
     .status-card h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; }
     .status-card p { color: var(--text-muted); max-width: 420px; margin: 0 auto; line-height: 1.6; }
     .status-card code {
@@ -252,7 +288,7 @@
       word-break: break-all;
     }
 
-    /* ââ Booking modal âââââââââââââââââââââââââââââââââââââââââ */
+    /* -- Booking modal ------------------------------------- */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -284,17 +320,35 @@
     .modal-sub   { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 18px; }
 
     .date-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
       background: var(--available-bg);
       color: var(--available);
       border: 1.5px solid var(--available-ring);
       border-radius: 8px;
-      padding: 7px 14px;
-      font-weight: 800;
-      font-size: 0.95rem;
+      padding: 12px 16px;
+      font-weight: 700;
+      font-size: 0.9rem;
       margin-bottom: 22px;
+      line-height: 1.7;
+    }
+    .date-badge .badge-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .date-badge .badge-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      opacity: 0.75;
+      min-width: 68px;
+    }
+    .date-badge .badge-nights {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--available-ring);
+      font-size: 0.85rem;
+      color: var(--available);
     }
 
     .form-group { margin-bottom: 14px; }
@@ -352,11 +406,10 @@
     .btn-ghost:hover { background: #f1f5f9; }
 
     .success-view { text-align: center; padding: 8px 0; }
-
     .success-view h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 8px; }
     .success-view p { color: var(--text-muted); line-height: 1.65; }
 
-    /* ââ Footer ââââââââââââââââââââââââââââââââââââââââââââââââ */
+    /* -- Footer -------------------------------------------- */
     footer {
       text-align: center;
       padding: 24px;
@@ -370,32 +423,44 @@
 
 <header>
   <h1>Island Time</h1>
-  <p>Pick an open date below to request a visit.<br>I'll confirm once your request comes through!</p>
+  <p>Pick your check-in and check-out dates to request a visit.<br>I'll confirm once your request comes through!</p>
 </header>
 
 <main>
   <div id="app">
     <div class="status-card">
-      <span class="icon">ð</span>
       <h3>Loading availability...</h3>
       <p>Fetching the latest calendar.</p>
     </div>
   </div>
 </main>
 
-<!-- ââ Booking Modal ââââââââââââââââââââââââââââââââââââââââ -->
+<!-- -- Booking Modal ------------------------------------ -->
 <div class="modal-overlay" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
   <div class="modal">
 
     <!-- Form view -->
     <div id="view-form">
-      <p class="modal-title" id="modal-title">Request a Visit ðº</p>
+      <p class="modal-title" id="modal-title">Request a Visit</p>
       <p class="modal-sub">Fill in your details and I'll be in touch to confirm.</p>
-      <div class="date-badge" id="date-badge">ð <span id="date-display"></span></div>
+
+      <div class="date-badge" id="date-badge">
+        <div class="badge-row">
+          <span class="badge-label">Check-in</span>
+          <span id="date-display-start"></span>
+        </div>
+        <div class="badge-row">
+          <span class="badge-label">Check-out</span>
+          <span id="date-display-end"></span>
+        </div>
+        <div class="badge-nights" id="date-nights"></div>
+      </div>
 
       <form id="booking-form" novalidate>
-        <input type="hidden" name="date"        id="f-date" />
-        <input type="hidden" name="_subject"    value="New visit request - Island Time" />
+        <input type="hidden" name="check_in"   id="f-date-start" />
+        <input type="hidden" name="check_out"  id="f-date-end"   />
+        <input type="hidden" name="nights"     id="f-nights"     />
+        <input type="hidden" name="_subject"   value="New visit request - Island Time" />
 
         <div class="form-group">
           <label>Name <span class="req">*</span></label>
@@ -427,7 +492,6 @@
 
     <!-- Success view -->
     <div id="view-success" class="success-view" style="display:none">
-      <span class="big-icon">ð</span>
       <h3>You're on the list!</h3>
       <p>Your visit request has been received.<br>I'll reach out soon to confirm.</p>
       <div class="btn-row" style="margin-top:24px">
@@ -449,8 +513,8 @@
 
    icalUrl
      Your iCloud public calendar URL.
-     In Calendar.app: right-click your calendar &rarr; Share Calendar &rarr;
-     enable "Public Calendar" &rarr; copy the webcal:// link,
+     In Calendar.app: right-click your calendar -> Share Calendar ->
+     enable "Public Calendar" -> copy the webcal:// link,
      then replace "webcal://" with "https://" and paste below.
 
    formspreeId
@@ -478,9 +542,10 @@ const PROXY = 'https://api.codetabs.com/v1/proxy?quest=';
 /* ============================================================
    State
    ============================================================ */
-let busyDates  = new Set();  // 'YYYY-MM-DD' strings from your calendar
-let winOffset  = 0;          // month offset of the leftmost displayed month
-let selectedDate = null;
+let busyDates    = new Set();  // 'YYYY-MM-DD' strings from your calendar
+let winOffset    = 0;          // month offset of the leftmost displayed month
+let selectedStart = null;      // first date the user clicked
+let selectedEnd   = null;      // second date the user clicked (end of range)
 
 /* ============================================================
    Date helpers
@@ -500,6 +565,14 @@ function addDays(d, n) {
 }
 function addMonths(d, n) {
   const c = new Date(d); c.setDate(1); c.setMonth(c.getMonth() + n); return c;
+}
+
+function parseKey(key) {
+  const [y,m,d] = key.split('-').map(Number);
+  return new Date(y, m-1, d);
+}
+function daysBetween(startKey, endKey) {
+  return Math.round((parseKey(endKey) - parseKey(startKey)) / 86400000);
 }
 
 function formatLong(key) {
@@ -607,7 +680,7 @@ const MONTH_NAMES = [
    Render the full app
    ============================================================ */
 function renderApp() {
-  const maxOffset = CONFIG.maxMonthsAhead - CONFIG.displayMonths; // e.g. 9-3 = 6
+  const maxOffset = CONFIG.maxMonthsAhead - CONFIG.displayMonths;
   const canPrev   = winOffset > 0;
   const canNext   = winOffset < maxOffset;
 
@@ -623,11 +696,23 @@ function renderApp() {
     monthsHtml += renderMonth(addMonths(todayDate(), winOffset + i));
   }
 
+  // Legend and hint vary depending on selection state
+  const legendAvailText = selectedStart && !selectedEnd
+    ? 'Available &mdash; click to set check-out'
+    : 'Available &mdash; click to set check-in';
+
+  const hintHtml = selectedStart && !selectedEnd
+    ? `<div class="range-hint" id="range-hint">Check-in set: ${formatLong(selectedStart)} &mdash; now click your check-out date</div>`
+    : '';
+
   document.getElementById('app').innerHTML = `
     <div class="legend">
-      <div class="legend-item"><div class="legend-swatch ls-available"></div>Available &mdash; click to book</div>
+      <div class="legend-item"><div class="legend-swatch ls-available"></div>${legendAvailText}</div>
+      <div class="legend-item"><div class="legend-swatch ls-selected"></div>Selected range</div>
       <div class="legend-item"><div class="legend-swatch ls-busy"></div>Unavailable</div>
     </div>
+
+    ${hintHtml}
 
     <div class="nav-row">
       <button class="nav-btn" onclick="navigate(-1)" ${!canPrev ? 'disabled' : ''} aria-label="Previous month">
@@ -662,10 +747,26 @@ function renderMonth(ref) {
     const status = getStatus(date);
     const isToday = key === todayKey;
 
-    const cls    = ['day-cell', status, isToday ? 'today-ring' : ''].filter(Boolean).join(' ');
-    const click  = status === 'available' ? `onclick="openBooking('${key}')"` : '';
-    const tip    = status === 'available' ? 'title="Click to request this date"'
-                 : status === 'busy'      ? 'title="This date is taken"'
+    // Range highlight classes
+    const isStart   = key === selectedStart;
+    const isEnd     = key === selectedEnd;
+    const isInRange = selectedStart && selectedEnd
+      && key > selectedStart && key < selectedEnd;
+
+    let extraCls = '';
+    if (isStart)   extraCls = ' range-start';
+    else if (isEnd) extraCls = ' range-end';
+    else if (isInRange) extraCls = ' in-range';
+
+    const cls = ['day-cell', status, isToday ? 'today-ring' : '', extraCls.trim()].filter(Boolean).join(' ');
+
+    // Clickable if available, or if it's the selected start (allow reset)
+    const clickable = status === 'available' || isStart;
+    const click  = clickable ? `onclick="selectDay('${key}')"` : '';
+    const tip    = status === 'available'
+                   ? (selectedStart && !selectedEnd ? 'title="Click to set as check-out date"' : 'title="Click to set as check-in date"')
+                 : status === 'busy'
+                   ? 'title="This date is not available"'
                  : '';
 
     cells += `<div class="${cls}" ${click} ${tip}>${d}</div>`;
@@ -685,7 +786,6 @@ function renderMonth(ref) {
 function showSetupHint() {
   document.getElementById('app').innerHTML = `
     <div class="status-card">
-      <span class="icon">ð§</span>
       <h3>Almost ready!</h3>
       <p>Open <strong>index.html</strong> and fill in the <code>CONFIG</code> block near the top of the script
          with your iCloud calendar URL and Formspree form ID.</p>
@@ -696,7 +796,6 @@ function showSetupHint() {
 function showError() {
   document.getElementById('app').innerHTML = `
     <div class="status-card">
-      <span class="icon">â ï¸</span>
       <h3>Couldn't load availability</h3>
       <p>There was a problem fetching your calendar. Check that your iCloud calendar URL is correct
          and publicly shared, then refresh the page.</p>
@@ -713,16 +812,66 @@ function navigate(delta) {
 }
 
 /* ============================================================
+   Date range selection
+   ============================================================ */
+function selectDay(key) {
+  // If no start selected yet, or if we already have a complete range: start fresh
+  if (!selectedStart || selectedEnd) {
+    selectedStart = key;
+    selectedEnd   = null;
+    renderApp();
+    return;
+  }
+
+  // We have a start but no end: this click is the end date
+  if (key <= selectedStart) {
+    // Clicked same day or earlier - treat as a new start
+    selectedStart = key;
+    selectedEnd   = null;
+    renderApp();
+    return;
+  }
+
+  // Validate that no busy dates fall within the selected range
+  let cur = addDays(parseKey(selectedStart), 1);
+  const endDate = parseKey(key);
+  while (cur < endDate) {
+    if (busyDates.has(toKey(cur))) {
+      selectedStart = null;
+      selectedEnd   = null;
+      renderApp();
+      // Small delay so the re-render happens before the alert
+      setTimeout(() => {
+        alert('One or more dates in that range are unavailable. Please choose a different range.');
+      }, 50);
+      return;
+    }
+    cur = addDays(cur, 1);
+  }
+
+  // Valid range - open the booking modal
+  selectedEnd = key;
+  renderApp();
+  openBookingRange();
+}
+
+/* ============================================================
    Modal
    ============================================================ */
-function openBooking(key) {
-  selectedDate = key;
-  document.getElementById('date-display').textContent = formatLong(key);
-  document.getElementById('f-date').value = key;
+function openBookingRange() {
+  const nights = daysBetween(selectedStart, selectedEnd);
+  const nightLabel = nights === 1 ? '1 night' : nights + ' nights';
 
-  // Reset to form view
+  document.getElementById('date-display-start').textContent = formatLong(selectedStart);
+  document.getElementById('date-display-end').textContent   = formatLong(selectedEnd);
+  document.getElementById('date-nights').textContent        = nightLabel;
+
+  // Reset form and populate hidden fields
   document.getElementById('booking-form').reset();
-  document.getElementById('f-date').value = key;
+  document.getElementById('f-date-start').value = selectedStart;
+  document.getElementById('f-date-end').value   = selectedEnd;
+  document.getElementById('f-nights').value     = nights;
+
   document.getElementById('view-form').style.display    = '';
   document.getElementById('view-success').style.display = 'none';
   const btn = document.getElementById('submit-btn');
@@ -735,7 +884,9 @@ function openBooking(key) {
 
 function closeModal() {
   document.getElementById('modal').classList.remove('open');
-  selectedDate = null;
+  selectedStart = null;
+  selectedEnd   = null;
+  renderApp();
 }
 
 // Close on backdrop click
@@ -746,7 +897,7 @@ document.getElementById('modal').addEventListener('click', e => {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 /* ============================================================
-   Form submission &rarr; Formspree
+   Form submission -> Formspree
    ============================================================ */
 document.getElementById('booking-form').addEventListener('submit', async e => {
   e.preventDefault();
