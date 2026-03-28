@@ -467,15 +467,9 @@
           <input type="text" name="name" id="f-name" required placeholder="Your name" />
         </div>
 
-        <div class="two-col">
-          <div class="form-group">
-            <label>Email <span class="req">*</span></label>
-            <input type="email" name="email" id="f-email" required placeholder="you@example.com" />
-          </div>
-          <div class="form-group">
-            <label>Phone</label>
-            <input type="tel" name="phone" placeholder="Optional" />
-          </div>
+        <div class="form-group">
+          <label>Phone <span class="req">*</span></label>
+          <input type="tel" name="phone" id="f-phone" required placeholder="Your phone number" />
         </div>
 
         <div class="form-group">
@@ -904,8 +898,8 @@ document.getElementById('booking-form').addEventListener('submit', async e => {
 
   // Basic client-side validation
   const name  = document.getElementById('f-name').value.trim();
-  const email = document.getElementById('f-email').value.trim();
-  if (!name || !email) return;
+  const phone = document.getElementById('f-phone').value.trim();
+  if (!name || !phone) return;
 
   const btn = document.getElementById('submit-btn');
   btn.disabled    = true;
