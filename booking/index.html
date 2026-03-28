@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Island Time â Book a Visit</title>
+  <title>Island Time - Book a Visit</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
   <!-- ical.js: parses your iCloud .ics calendar feed -->
@@ -378,7 +378,7 @@
   <div id="app">
     <div class="status-card">
       <span class="icon">ð</span>
-      <h3>Loading availabilityâ¦</h3>
+      <h3>Loading availability...</h3>
       <p>Fetching the latest calendar.</p>
     </div>
   </div>
@@ -396,7 +396,7 @@
 
       <form id="booking-form" novalidate>
         <input type="hidden" name="date"        id="f-date" />
-        <input type="hidden" name="_subject"    value="New visit request â Island Time" />
+        <input type="hidden" name="_subject"    value="New visit request - Island Time" />
 
         <div class="form-group">
           <label>Name <span class="req">*</span></label>
@@ -416,7 +416,7 @@
 
         <div class="form-group">
           <label>Message</label>
-          <textarea name="message" placeholder="Anything you'd like me to know about your visitâ¦"></textarea>
+          <textarea name="message" placeholder="Anything you'd like me to know about your visit..."></textarea>
         </div>
 
         <div class="btn-row">
@@ -445,13 +445,13 @@
 
 <script>
 /* ============================================================
-   CONFIGURATION â fill these in before deploying
+   CONFIGURATION - fill these in before deploying
    ============================================================
 
    icalUrl
      Your iCloud public calendar URL.
-     In Calendar.app: right-click your calendar â Share Calendar â
-     enable "Public Calendar" â copy the webcal:// link,
+     In Calendar.app: right-click your calendar &rarr; Share Calendar &rarr;
+     enable "Public Calendar" &rarr; copy the webcal:// link,
      then replace "webcal://" with "https://" and paste below.
 
    formspreeId
@@ -459,7 +459,7 @@
      and paste the form ID here (the part after /f/ in the URL).
 
    ownerName
-     Your name â shown in the page title and emails.
+     Your name - shown in the page title and emails.
 
    ============================================================ */
 
@@ -472,7 +472,7 @@ const CONFIG = {
   maxMonthsAhead: 9,    // how far ahead guests can browse / book
 };
 
-// CORS proxy â lets the browser fetch your iCal feed
+// CORS proxy - lets the browser fetch your iCal feed
 // (Apple's servers don't include CORS headers)
 const PROXY = 'https://api.codetabs.com/v1/proxy?quest=';
 
@@ -616,8 +616,8 @@ function renderApp() {
   const rangeEnd   = addMonths(todayDate(), winOffset + CONFIG.displayMonths - 1);
   const sameYear   = rangeStart.getFullYear() === rangeEnd.getFullYear();
   const rangeLabel = sameYear
-    ? `${MONTH_NAMES[rangeStart.getMonth()]} â ${MONTH_NAMES[rangeEnd.getMonth()]} ${rangeEnd.getFullYear()}`
-    : `${MONTH_NAMES[rangeStart.getMonth()]} ${rangeStart.getFullYear()} â ${MONTH_NAMES[rangeEnd.getMonth()]} ${rangeEnd.getFullYear()}`;
+    ? `${MONTH_NAMES[rangeStart.getMonth()]} - ${MONTH_NAMES[rangeEnd.getMonth()]} ${rangeEnd.getFullYear()}`
+    : `${MONTH_NAMES[rangeStart.getMonth()]} ${rangeStart.getFullYear()} - ${MONTH_NAMES[rangeEnd.getMonth()]} ${rangeEnd.getFullYear()}`;
 
   let monthsHtml = '';
   for (let i = 0; i < CONFIG.displayMonths; i++) {
@@ -626,17 +626,17 @@ function renderApp() {
 
   document.getElementById('app').innerHTML = `
     <div class="legend">
-      <div class="legend-item"><div class="legend-swatch ls-available"></div>Available â click to book</div>
+      <div class="legend-item"><div class="legend-swatch ls-available"></div>Available &mdash; click to book</div>
       <div class="legend-item"><div class="legend-swatch ls-busy"></div>Unavailable</div>
     </div>
 
     <div class="nav-row">
       <button class="nav-btn" onclick="navigate(-1)" ${!canPrev ? 'disabled' : ''} aria-label="Previous month">
-        â Prev
+        &larr; Prev
       </button>
       <span class="nav-label">${rangeLabel}</span>
       <button class="nav-btn" onclick="navigate(1)" ${!canNext ? 'disabled' : ''} aria-label="Next month">
-        Next â
+        Next &rarr;
       </button>
     </div>
 
@@ -747,7 +747,7 @@ document.getElementById('modal').addEventListener('click', e => {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 /* ============================================================
-   Form submission â Formspree
+   Form submission &rarr; Formspree
    ============================================================ */
 document.getElementById('booking-form').addEventListener('submit', async e => {
   e.preventDefault();
@@ -759,7 +759,7 @@ document.getElementById('booking-form').addEventListener('submit', async e => {
 
   const btn = document.getElementById('submit-btn');
   btn.disabled    = true;
-  btn.textContent = 'Sendingâ¦';
+  btn.textContent = 'Sending...';
 
   try {
     const res = await fetch(`https://formspree.io/f/${CONFIG.formspreeId}`, {
@@ -778,7 +778,7 @@ document.getElementById('booking-form').addEventListener('submit', async e => {
     console.error('Submit failed:', err);
     btn.disabled    = false;
     btn.textContent = 'Send Request';
-    alert('Something went wrong â please try again.');
+    alert('Something went wrong - please try again.');
   }
 });
 
