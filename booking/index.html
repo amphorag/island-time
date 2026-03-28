@@ -107,7 +107,6 @@
     }
     .ls-available { background: var(--available-bg); border: 1.5px solid var(--available); }
     .ls-busy      { background: var(--busy-bg);      border: 1.5px solid var(--busy); }
-    .ls-notice    { background: var(--notice-bg);    border: 1.5px solid var(--notice); }
     .ls-past      { background: #eee; border: 1.5px solid #ddd; }
 
     /* ââ Navigation row ââââââââââââââââââââââââââââââââââââââââ */
@@ -205,7 +204,6 @@
       position: relative;
     }
     .day-cell.past    { color: var(--past-text); }
-    .day-cell.notice  { color: var(--notice); background: var(--notice-bg); }
     .day-cell.busy    {
       color: var(--busy);
       background: var(--busy-bg);
@@ -469,7 +467,7 @@ const CONFIG = {
   icalUrl:        'https://p129-caldav.icloud.com/published/2/MjY5NzY1MDk4MjY5NzY1MMuK0ACHkdpc5GygDGb6-2DYU406dc50UWBLnFyTBofK-qLrJXmFOQDbIFCHnXQKwA46Ads2FlXBo0s1yNZee2Q',
   formspreeId:    'xzdkdkvn',
   ownerName:      'Cory',
-  minNoticeDays:  3,    // guests can't book fewer than this many days out
+
   displayMonths:  3,    // months shown at once
   maxMonthsAhead: 9,    // how far ahead guests can browse / book
 };
@@ -588,13 +586,11 @@ function parseIcal(text) {
    ============================================================ */
 function getStatus(date) {
   const t        = todayDate();
-  const minBook  = addDays(t, CONFIG.minNoticeDays);
   const maxBook  = addMonths(t, CONFIG.maxMonthsAhead);
   const key      = toKey(date);
 
   if (date < t)         return 'past';
   if (date > maxBook)   return 'past';
-  if (date < minBook)   return 'notice';   // too soon
   if (busyDates.has(key)) return 'busy';
   return 'available';
 }
@@ -632,8 +628,6 @@ function renderApp() {
     <div class="legend">
       <div class="legend-item"><div class="legend-swatch ls-available"></div>Available â click to book</div>
       <div class="legend-item"><div class="legend-swatch ls-busy"></div>Unavailable</div>
-      <div class="legend-item"><div class="legend-swatch ls-notice"></div>Too soon (${CONFIG.minNoticeDays}-day notice needed)</div>
-      <div class="legend-item"><div class="legend-swatch ls-past"></div>Past</div>
     </div>
 
     <div class="nav-row">
@@ -672,7 +666,6 @@ function renderMonth(ref) {
     const cls    = ['day-cell', status, isToday ? 'today-ring' : ''].filter(Boolean).join(' ');
     const click  = status === 'available' ? `onclick="openBooking('${key}')"` : '';
     const tip    = status === 'available' ? 'title="Click to request this date"'
-                 : status === 'notice'    ? `title="Booking requires ${CONFIG.minNoticeDays}+ days notice"`
                  : status === 'busy'      ? 'title="This date is taken"'
                  : '';
 
