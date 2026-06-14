@@ -529,9 +529,9 @@ const CONFIG = {
   maxMonthsAhead: 9,    // how far ahead guests can browse / book
 };
 
-// CORS proxy - lets the browser fetch your iCal feed
-// (Apple's servers don't include CORS headers)
-const PROXY = 'https://api.codetabs.com/v1/proxy?quest=';
+// Calendar data file - kept in sync with CONFIG.icalUrl by the
+  // .github/workflows/sync-calendar.yml GitHub Action (runs every 30 min)
+  const CALENDAR_FILE = './calendar.ics';
 
 /* ============================================================
    State
@@ -586,7 +586,7 @@ async function loadCalendar() {
     return;
   }
   try {
-    const res = await fetch(PROXY + encodeURIComponent(CONFIG.icalUrl));
+    const res = await fetch(CALENDAR_FILE + '?t=' + Date.now());
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const text = await res.text();
     busyDates = parseIcal(text);
